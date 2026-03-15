@@ -1,0 +1,231 @@
+ <!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Saffron | Luxury Experience</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: #fffaf5; color: #333; }
+
+        /* --- 1. MODERN HEADER --- */
+        header {
+            background: #fff;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #b22222;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover { color: #d4a017; }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* --- 2. FOOTER (4 COLUMNS) --- */
+        footer {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 70px 5% 20px;
+            margin-top: 80px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            color: #d4a017;
+            font-size: 22px;
+        }
+
+        .footer-col p, .footer-col li {
+            font-size: 14px;
+            color: #bbb;
+            line-height: 2;
+            list-style: none;
+        }
+
+        .footer-col a {
+            color: #bbb;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-col a:hover { color: #fff; padding-left: 5px; }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 35px;
+            height: 35px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover { background: #d4a017; color: #fff; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Hero & Grid Styles (Summary) */
+        .hero-banner {
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1509358271058-acd22cc93898?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; color: #fff; text-align: center;
+        }
+        .container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .p-card { background: #fff; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #eee; transition: 0.3s; }
+        .p-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .p-img { width: 100%; height: 230px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
+        .btn-buy { background: #b22222; color: #fff; padding: 10px 25px; text-decoration: none; border-radius: 25px; display: inline-block; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav { display: none; } /* Mobile menu can be added later */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">GOLDEN SAFFRON</a>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#products">Shop</a></li>
+                <li><a href="#">Our Story</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-icons">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+    </header>
+
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1 style="font-family: 'Playfair Display'; font-size: 60px;">The Soul of Kashmir</h1>
+            <p style="letter-spacing: 3px; text-transform: uppercase;">100% Pure Grade-A Saffron</p>
+        </div>
+    </section>
+
+    <div class="container" id="products">
+        <h2 style="text-align: center; font-family: 'Playfair Display'; font-size: 35px; margin-bottom: 40px;">Featured Collection</h2>
+        <div class="product-grid">
+            <div class="p-card">
+                <img src="https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?w=500" class="p-img">
+                <h3>Premium Mongra</h3>
+                <p style="color: #b22222; font-weight: bold; font-size: 20px;">₹499</p>
+                <a href="#" class="btn-buy">Add to Cart</a>
+            </div>
+            <div class="p-card">
+                <img src="https://images.unsplash.com/photo-1595353163202-999335805f42?w=500" class="p-img">
+                <h3>Lacha Threads</h3>
+                <p style="color: #b22222; font-weight: bold; font-size: 20px;">₹1,950</p>
+                <a href="#" class="btn-buy">Add to Cart</a>
+            </div>
+            <div class="p-card">
+                <img src="https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500" class="p-img">
+                <h3>Gift Edition</h3>
+                <p style="color: #b22222; font-weight: bold; font-size: 20px;">₹2,800</p>
+                <a href="#" class="btn-buy">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Golden Saffron</h3>
+                <p>हम सीधे कश्मीर के खेतों से बेहतरीन और शुद्ध केसर आप तक पहुँचाते हैं। शुद्धता और विश्वास ही हमारी पहचान है।</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Shipping Policy</a></li>
+                <li><a href="#">Return & Refund</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </div>
+            <div class="footer-col">
+                <h3>Categories</h3>
+                <li><a href="#">Mongra Saffron</a></li>
+                <li><a href="#">Lacha Saffron</a></li>
+                <li><a href="#">Saffron Gift Boxes</a></li>
+                <li><a href="#">Bulk Orders</a></li>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Pampore, Kashmir, India</p>
+                <p><i class="fa-solid fa-phone"></i> +91 98765 43210</p>
+                <p><i class="fa-solid fa-envelope"></i> support@goldensaffron.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Golden Saffron India. Designed for Excellence.
+        </div>
+    </footer>
+
+</body>
+</html>
