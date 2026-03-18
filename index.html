@@ -9,33 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 
     <style>
+        /* --- ALL STYLES (ORIGINAL + NEW MODAL) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         html { font-size: 14px; scroll-behavior: smooth; }
-        
-        /* --- BACKGROUND SAFFRON JAR (FIXED) --- */
-        body { 
-            background: #fdfdfd; 
-            color: #444; 
-            overflow-x: hidden; 
-            background-image: url('image_1.png'); /* Set background image from image_1.png */
-            background-attachment: fixed; /* Keep it fixed on scroll */
-            background-size: cover; /* Cover the entire screen */
-            background-position: center; /* Center the image */
-            background-repeat: no-repeat;
-        }
+        body { background: #fdfdfd; color: #444; overflow-x: hidden; }
 
         /* --- LOADER --- */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; z-index: 9999;
+            align-items: center; justify-content: center; z-index: 99999;
             transition: opacity 1s ease;
         }
         .loader-bar { width: 120px; height: 1px; background: rgba(255,255,255,0.1); position: relative; overflow: hidden; margin-top: 15px; }
         .loader-bar::after { content: ''; position: absolute; left: -100%; width: 100%; height: 100%; background: #ffcc00; animation: loading 1.5s infinite; }
         @keyframes loading { to { left: 100%; } }
 
-        /* --- REVEAL --- */
+        /* --- REVEAL ANIMATION --- */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -47,17 +37,19 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* --- HEADER (FIXED: MOBILE SLIDEBAR RESTORED) --- */
+        /* --- INTERACTIVE BUTTONS --- */
+        button, .hero-btn { transition: transform 0.2s; cursor: pointer; outline: none; }
+        button:active, .hero-btn:active { transform: scale(0.92); }
+
+        /* --- HEADER --- */
         .header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 8%; background: #000; position: sticky; top: 0; z-index: 1000;
         }
         .nav-links a { color: #ccc; text-decoration: none; font-size: 0.8rem; margin-left: 20px; transition: 0.3s; }
-        
-        /* Mobile Slidebar Icon (Restore Bars) */
         .menu-btn { display: none; color: white; font-size: 1.5rem; cursor: pointer; }
 
-        /* --- SIDEBAR (FULL SCREEN BLUR) --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.98); backdrop-filter: blur(15px);
@@ -68,109 +60,112 @@
         .sidebar a { color: #fff; font-size: 2rem; text-decoration: none; margin: 15px 0; font-family: 'Playfair Display'; transform: translateY(30px); opacity: 0; transition: 0.4s ease;}
         .sidebar.active a { transform: translateY(0); opacity: 1; transition-delay: 0.3s;}
 
+        .sidebar-footer { position: absolute; bottom: 30px; display: flex; align-items: center; gap: 30px; }
+        .admin-icon { color: #fff; font-size: 1.5rem; cursor: pointer; transition: 0.3s; opacity: 0.6; }
+        .admin-icon:hover { color: #ffcc00; opacity: 1; }
+
         @media (max-width: 1023px) { .nav-links { display: none; } .menu-btn { display: block; } }
 
         /* --- HERO --- */
         .hero {
             height: 75vh; 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('image_1.png') center/cover; /* Hero can also use image_1.png but centered */
-            display: flex; align-items: center; 
-            justify-content: center; 
-            text-align: center;
-            color: white;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://img.sanishtech.com/u/9fb095560e499e1b384abac8496e139a.jpg') center/cover;
+            display: flex; align-items: center; justify-content: center; /* Centered for laptop */
+            padding: 0 10%; text-align: center; color: white;
         }
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-        }
-        .hero h1 { font-size: 5rem; font-family: 'Playfair Display', serif; }
-        .hero p { font-size: 1.4rem; letter-spacing: 4px; margin: 15px 0 30px; }
-        .hero-btn { 
-            display: inline-block; 
-            padding: 15px 50px; 
-            background: #ffcc00; 
-            color: #000; 
-            text-decoration: none; 
-            font-weight: 600; 
-            border-radius: 2px;
-            font-size: 1.1rem;
-        }
+        .hero h1 { font-size: 4rem; font-family: 'Playfair Display', serif; }
+        .hero p { font-size: 1.2rem; letter-spacing: 3px; margin: 15px 0 30px; }
+        .hero-btn { display: inline-block; padding: 12px 40px; background: #ffcc00; color: #000; text-decoration: none; font-weight: 600; border-radius: 2px; }
 
-        /* --- STORIES (RESTORED Zigzag Pattern) --- */
-        .story-container { padding: 80px 8%; background: rgba(255, 255, 255, 0.85); /* Semi-transparent background for content */ }
-        .story-row { display: flex; align-items: center; gap: 80px; margin-bottom: 80px; text-align: left; }
-        .story-row:nth-child(even) { flex-direction: row-reverse; text-align: right; } 
-        .story-img-box { flex: 1; overflow: hidden; border-radius: 8px; }
-        .story-img-box img { width: 100%; display: block; box-shadow: 15px 15px 0px #f9f2e2; }
-        .story-text-box { flex: 1; }
+        /* --- STORIES --- */
+        .story-container { padding: 80px 8%; background: white; }
+        .story-row { display: flex; align-items: center; gap: 40px; margin-bottom: 70px; width: 100%; }
+        .story-row:nth-child(even) { flex-direction: row-reverse; } 
+        .story-img-box { flex: 0 0 35%; overflow: hidden; border-radius: 8px; }
+        .story-img-box img { width: 100%; display: block; box-shadow: 12px 12px 0px #f9f2e2; transition: 0.6s ease; }
 
-        /* --- VIDEO & FIELDS (RESTORED Field images Pattern) --- */
-        .fields-container { padding: 60px 8%; background: rgba(255, 250, 240, 0.9); text-align: center; }
+        /* --- FIELDS & VIDEO --- */
+        .fields-container { padding: 60px 8%; background: #fffaf0; text-align: center; }
         .video-box { 
             width: 100%; max-width: 800px; margin: 0 auto 60px; border-radius: 12px; 
             overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 6px solid #fff;
-            cursor: pointer; background: #000;
         }
-        .video-box video { width: 100%; display: block; outline: none; }
-        video::-webkit-media-controls { display:none !important; }
-        video::-webkit-media-controls-enclosure { display:none !important; }
-
-        .field-images { display: flex; flex-direction: column; gap: 60px; align-items: center; padding-top: 40px; }
-        .field-row { display: flex; align-items: center; gap: 50px; width: 100%; max-width: 1000px; text-align: left; }
-        .field-row.reverse { flex-direction: row-reverse; text-align: right; }
-        .field-img { flex: 1; overflow: hidden; border-radius: 8px; }
+        .video-box iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+        .field-images { display: flex; flex-direction: row; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .field-card { flex: 1; min-width: 250px; background: #fff; padding: 10px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .field-img { width: 100%; overflow: hidden; border-radius: 8px; }
         .field-img img { width: 100%; display: block; transition: 0.5s; }
-        .field-text { flex: 1; }
+        .field-card h3 { margin-top: 15px; font-family: 'Playfair Display'; font-size: 1.2rem; }
 
         /* --- FEATURES --- */
-        .features { display: flex; justify-content: center; gap: 80px; padding: 100px 5%; background: rgba(255, 255, 255, 0.9); text-align: center; }
-        .feature { transition: 0.3s; }
-        .feature i { font-size: 60px; color: #b8860b; margin-bottom: 25px; } 
-        .feature h3 { font-size: 1.8rem; font-weight: 500; } 
+        .features { display: flex; justify-content: center; gap: 40px; padding: 60px 5%; background: #fff; text-align: center; }
+        .feature i { font-size: 30px; color: #b8860b; margin-bottom: 15px; }
+        .feature h3 { font-size: 0.9rem; font-weight: 600; }
 
-        /* --- PRODUCTS (UPDATED: Card background set to image_1.png) --- */
-        .products { padding: 80px 5%; background: rgba(250, 250, 250, 0.9); text-align: center; }
+        /* --- PRODUCTS (20 ITEMS) --- */
+        .products { padding: 80px 5%; background: #fafafa; text-align: center; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 40px; }
-        .product { 
-            background: white; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 1px solid #eee; 
-            text-align: left; 
-            background-image: url('image_1.png'); /* Product Card background */
-            background-size: cover; 
-            background-position: center;
-        }
-        /* Make sure text is readable on product card */
-        .product h3 { color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.6); margin-bottom: 5px; font-size: 1rem; }
-        .product p { color: #ffcc00; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.6); }
-
+        .product { background: white; padding: 12px; border-radius: 8px; border: 1px solid #eee; text-align: left; transition: all 0.4s ease; }
+        .product:hover { transform: translateY(-10px); border-color: #ffcc00; box-shadow: 0 15px 30px rgba(184, 134, 11, 0.15); }
         .product img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
-        .btn-sm { width: 100%; background: #ffcc00; color: #000; padding: 10px; border: none; font-weight: 600; border-radius: 4px; cursor: pointer; }
+        .product h3 { font-size: 0.9rem; margin-bottom: 5px; color: #333; }
+        .btn-sm { width: 100%; background: #ffcc00; color: #000; padding: 10px; border: none; font-size: 0.85rem; font-weight: 600; border-radius: 4px; transition: 0.3s; cursor: pointer; }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(6, 1fr); } }
 
+        /* --- ANIMATED LOGIN MODAL --- */
+        #loginModal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 99999; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        .auth-container {
+            background-color: #fff; border-radius: 30px; position: relative;
+            overflow: hidden; width: 768px; max-width: 95%; min-height: 480px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .auth-container .form-container { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; }
+        .auth-container form { background: #fff; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 0 40px; height: 100%; text-align: center; }
+        .auth-container input { background: #f4f4f4; border: none; padding: 12px 15px; margin: 8px 0; width: 100%; border-radius: 8px; outline: none; }
+        .auth-btn { border-radius: 25px; border: 1px solid #b8860b; background: #b8860b; color: #fff; font-size: 12px; font-weight: bold; padding: 12px 45px; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .auth-btn.ghost { background: transparent; border-color: #fff; }
+
+        .sign-in-container { left: 0; width: 50%; z-index: 2; }
+        .sign-up-container { left: 0; width: 50%; opacity: 0; z-index: 1; }
+        .auth-overlay-container {
+            position: absolute; top: 0; left: 50%; width: 50%; height: 100%;
+            overflow: hidden; transition: transform 0.6s ease-in-out; z-index: 100;
+            border-radius: 150px 0 0 100px;
+        }
+        .auth-overlay {
+            background: linear-gradient(to right, #b8860b, #000); color: #fff;
+            position: relative; left: -100%; height: 100%; width: 200%;
+            transform: translateX(0); transition: transform 0.6s ease-in-out;
+        }
+        /* Admin mode hide curve/signup */
+        .admin-mode .auth-overlay-container, .admin-mode .sign-up-container { display: none !important; }
+        .admin-mode .sign-in-container { width: 100% !important; left: 0 !important; }
+        .admin-mode .auth-container { max-width: 400px; min-height: 400px; }
+
+        .auth-container.right-panel-active .sign-in-container { transform: translateX(100%); }
+        .auth-container.right-panel-active .sign-up-container { transform: translateX(100%); opacity: 1; z-index: 5; }
+        .auth-container.right-panel-active .auth-overlay-container { transform: translateX(-100%); border-radius: 0 150px 100px 0; }
+        .auth-container.right-panel-active .auth-overlay { transform: translateX(50%); }
+
+        .close-auth { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; z-index: 1000; color: #444; }
+
+        /* --- BILLING MODAL --- */
+        #billingModal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center;
+        }
+        .billing-box { background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px; text-align: center; }
         .footer { background: #0b0b0b; padding: 60px 8% 20px; color: #bbb; text-align: center; }
 
-        /* --- RESPONSIVE MOBILE FIX --- */
         @media (max-width: 768px) {
-            .hero { justify-content: center; text-align: center; padding: 0 5%; }
-            .hero h1 { font-size: 3rem; }
-            .hero p { font-size: 1.1rem; }
-            
-            /* Center patterned rows on mobile */
-            .story-row, .story-row:nth-child(even), .field-row, .field-row.reverse { 
-                flex-direction: column !important; 
-                text-align: center !important; 
-                gap: 25px;
-                margin-bottom: 50px;
-            }
-            .story-img-box, .field-img { width: 100%; }
-            
-            .features { flex-direction: column; gap: 40px; padding: 60px 5%; }
-            .feature i { font-size: 45px; }
-            .feature h3 { font-size: 1.4rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .story-row, .story-row:nth-child(even) { flex-direction: column !important; text-align: center; }
+            .story-img-box { flex: 0 0 100%; }
         }
-        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(6, 1fr); } }
     </style>
 </head>
 <body>
@@ -180,22 +175,27 @@
         <div class="loader-bar"></div>
     </div>
 
+    <div class="sidebar" id="sidebar">
+        <div style="position: absolute; top: 20px; right: 8%; color: #fff; font-size: 2.5rem; cursor: pointer;" onclick="toggleSidebar()">&times;</div>
+        <a href="#" onclick="toggleSidebar()">HOME</a>
+        <a href="#products" onclick="toggleSidebar()">SHOP</a>
+        <a href="#story" onclick="toggleSidebar()">STORY</a>
+        <a href="https://wa.me/91XXXXXXXXXX" onclick="toggleSidebar()">CONTACT US</a> 
+        <div class="sidebar-footer">
+            <i class="fas fa-user-shield admin-icon" onclick="openAuth(true)"></i> 
+        </div>
+    </div>
+
     <header class="header">
         <div class="logo gold-shine" style="font-size: 1.4rem; font-family: 'Playfair Display';">Golden Saffron</div>
         <nav class="nav-links">
             <a href="#">HOME</a>
             <a href="#products">SHOP</a>
             <a href="#story">STORY</a>
+            <a href="javascript:void(0)" onclick="openAuth(false)">LOGIN</a>
         </nav>
         <div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
     </header>
-
-    <div class="sidebar" id="sidebar">
-        <div style="position: absolute; top: 20px; right: 8%; color: #fff; font-size: 2.5rem; cursor: pointer;" onclick="toggleSidebar()">&times;</div>
-        <a href="#" onclick="toggleSidebar()">HOME</a>
-        <a href="#products" onclick="toggleSidebar()">SHOP</a>
-        <a href="#story" onclick="toggleSidebar()">STORY</a>
-    </div>
 
     <section class="hero">
         <div class="hero-content reveal">
@@ -210,28 +210,21 @@
             <div class="story-img-box"><img src="https://img.sanishtech.com/u/9fb095560e499e1b384abac8496e139a.jpg"></div>
             <div class="story-text-box">
                 <h2 class="gold-shine">Dawn Harvest</h2>
-                <p>Handpicked pure saffron, gathered with the very first rays of the dawn sun.</p>
+                <p>Straight from the fields of Kashmir. Handpicked pure saffron, gathered with the very first rays of the dawn sun.</p>
             </div>
         </div>
         <div class="story-row reveal">
             <div class="story-img-box"><img src="https://img.sanishtech.com/u/9fb095560e499e1b384abac8496e139a.jpg"></div>
             <div class="story-text-box">
                 <h2 class="gold-shine">Certified Purity</h2>
-                <p>ISO Grade-1 Certified. We promise absolute purity with no artificial colors.</p>
+                <p>ISO Grade-1 Certified. We promise absolute purity with no artificial colors, just the authentic Kashmiri aroma.</p>
             </div>
         </div>
         <div class="story-row reveal">
             <div class="story-img-box"><img src="https://img.sanishtech.com/u/9fb095560e499e1b384abac8496e139a.jpg"></div>
             <div class="story-text-box">
                 <h2 class="gold-shine">Health Essence</h2>
-                <p>Rich in antioxidants, it helps boost immunity and brings a natural glow.</p>
-            </div>
-        </div>
-        <div class="story-row reveal">
-            <div class="story-img-box"><img src="https://img.sanishtech.com/u/9fb095560e499e1b384abac8496e139a.jpg"></div>
-            <div class="story-text-box">
-                <h2 class="gold-shine">Trust & Legacy</h2>
-                <p>Delivered directly from our fields to your home, ensuring the legacy of gold.</p>
+                <p>A natural boon for your well-being. Rich in antioxidants, it helps boost immunity and brings a natural glow.</p>
             </div>
         </div>
     </section>
@@ -239,96 +232,175 @@
     <section class="fields-container">
         <h2 class="gold-shine reveal" style="font-size: 2.5rem; margin-bottom: 40px; font-family: 'Playfair Display';">Vast Saffron Fields</h2>
         <div class="video-box reveal">
-            <video id="promoVideo" playsinline autoplay muted loop poster="https://img.sanishtech.com/u/9fb095560e499e1b384abac8496e139a.jpg">
-                <source src="VID-20260318-WA0000.mp4" type="video/mp4">
-            </video>
+            <iframe src="https://www.youtube.com/embed/your_video_id?autoplay=1&mute=1&loop=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
-
         <div class="field-images">
-            <div class="field-row reveal">
-                <div class="field-img"><img src="https://img.sanishtech.com/u/c1bc3348ed25a98e096ad4abf352226a.jpg"></div>
-                <div class="field-text">
-                    <h3 class="gold-shine">Purple Bloom</h3>
-                    <p>The beautiful crocuses blooming across Pampore, Kashmir, creating a vibrant purple carpet.</p>
-                </div>
+            <div class="field-card reveal">
+                <div class="field-img"><img src="https://img.sanishtech.com/u/8354d3c9710fd73c594a84acaed5774b.jpg"></div>
+                <h3>Purple Bloom</h3>
             </div>
-            <div class="field-row reverse reveal">
+            <div class="field-card reveal">
                 <div class="field-img"><img src="https://img.sanishtech.com/u/e6776aff0a6cf05a5853892f5aafdd3f.jpg"></div>
-                <div class="field-text">
-                    <h3 class="gold-shine">Careful Picking</h3>
-                    <p>Each thread is delicately removed by hand, a process requiring immense patience and skill.</p>
-                </div>
-            </div>
-            <div class="field-row reveal">
-                <div class="field-img"><img src="https://img.sanishtech.com/u/aba81a1589a4c8399e3975db439c85d4.jpg"></div>
-                <div class="field-text">
-                    <h3 class="gold-shine">Golden Sun Drying</h3>
-                    <p>The fresh threads are dried under the precise amount of sunlight to lock in flavor and aroma.</p>
-                </div>
+                <h3>Careful Picking</h3>
             </div>
         </div>
     </section>
 
     <section class="features">
-        <div class="feature reveal"><i class="fa-solid fa-leaf"></i><h3>100% Organic</h3></div>
-        <div class="feature reveal"><i class="fa-solid fa-award"></i><h3>ISO Grade 1</h3></div>
-        <div class="feature reveal"><i class="fa-solid fa-truck"></i><h3>Express Shipping</h3></div>
+        <div class="feature reveal"><i class="fa-solid fa-leaf"></i><h3>Organic</h3></div>
+        <div class="feature reveal"><i class="fa-solid fa-award"></i><h3>Grade 1</h3></div>
+        <div class="feature reveal"><i class="fa-solid fa-truck"></i><h3>Fast Delivery</h3></div>
     </section>
 
     <section class="products" id="products">
-        <h2 class="gold-shine reveal" style="font-size: 2.2rem; margin-bottom: 10px;">Our Collection</h2>
+        <h2 class="gold-shine reveal" style="font-size: 2.2rem; margin-bottom: 10px;">Our Products</h2>
         <div class="product-grid" id="product-list"></div>
     </section>
 
+    <div id="loginModal">
+        <div class="auth-container" id="authContainer">
+            <span class="close-auth" onclick="closeAuth()">&times;</span>
+            <div class="form-container sign-up-container">
+                <form action="#">
+                    <h1 class="gold-shine">Create Account</h1>
+                    <input type="text" placeholder="Name" /><input type="email" placeholder="Email" /><input type="password" placeholder="Password" />
+                    <button class="auth-btn" type="button">Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form action="#">
+                    <h1 class="gold-shine" id="authTitle">Sign In</h1>
+                    <input type="email" placeholder="Email" /><input type="password" placeholder="Password" />
+                    <button class="auth-btn" type="button">Sign In</button>
+                </form>
+            </div>
+            <div class="auth-overlay-container">
+                <div class="auth-overlay">
+                    <div class="auth-overlay-panel auth-overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <button class="auth-btn ghost" id="signInBtn">Sign In</button>
+                    </div>
+                    <div class="auth-overlay-panel auth-overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <button class="auth-btn ghost" id="signUpBtn">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="billingModal">
+        <div class="billing-box">
+            <h2 class="gold-shine">Complete Order</h2>
+            <p id="orderItem" style="margin-bottom:15px; font-weight:bold; color: #555;"></p>
+            <input type="text" id="custName" placeholder="Full Name">
+            <input type="text" id="custPhone" placeholder="WhatsApp Number">
+            <textarea id="custAddr" placeholder="Full Delivery Address" style="height: 80px; resize: none; width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"></textarea>
+            <button class="btn-sm" onclick="confirmOrder()" style="background:#ffcc00; width:100%;">Confirm My Order</button>
+            <p style="margin-top:15px; cursor:pointer; font-size:0.8rem; color:#888;" onclick="closeBilling()">Cancel</p>
+        </div>
+    </div>
+
     <footer class="footer">
-        <p>© 2026 Golden Saffron Noida</p>
+        <p>© 2026 Golden Saffron Noida | Purity is our legacy.</p>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
     <script>
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        // --- FIREBASE ---
+        const firebaseConfig = { apiKey: "AIzaSy...", databaseURL: "https://golden-saffron-802c9-default-rtdb.firebaseio.com/", projectId: "golden-saffron-802c9" };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // --- LOADER & REVEAL ---
         window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
             setTimeout(() => {
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('loader').style.display = 'none', 1000);
-                reveal();
-            }, 1000);
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; reveal(); }, 1000);
+            }, 1200);
         });
 
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) reveals[i].classList.add("active");
+                if (reveals[i].getBoundingClientRect().top < window.innerHeight - 100) reveals[i].classList.add("active");
             }
         }
         window.addEventListener("scroll", reveal);
 
-        const video = document.getElementById('promoVideo');
-        video.addEventListener('click', function() {
-            video.muted = false;
-            if (video.requestFullscreen) video.requestFullscreen();
-            video.play();
-        });
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
 
-        // Generate 20 Products
+        // --- AUTH MODAL LOGIC ---
+        const authContainer = document.getElementById('authContainer');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signInBtn = document.getElementById('signInBtn');
+
+        signUpBtn.addEventListener('click', () => authContainer.classList.add("right-panel-active"));
+        signInBtn.addEventListener('click', () => authContainer.classList.remove("right-panel-active"));
+
+        function openAuth(isAdmin) {
+            const modal = document.getElementById('loginModal');
+            modal.style.display = 'flex';
+            if(isAdmin) {
+                authContainer.classList.add('admin-mode');
+                document.getElementById('authTitle').innerText = "Admin Login";
+            } else {
+                authContainer.classList.remove('admin-mode');
+                document.getElementById('authTitle').innerText = "Sign In";
+            }
+            if(document.getElementById('sidebar').classList.contains('active')) toggleSidebar();
+        }
+        function closeAuth() { document.getElementById('loginModal').style.display = 'none'; }
+
+        // --- PRODUCTS (20 ITEMS) ---
         const products = [
-            { name: "Royal Mogra (1g)", price: "$15" }, { name: "Premium Lacha (2g)", price: "$28" },
-            { name: "Luxury Gift Box", price: "$65" }, { name: "Organic Saffron", price: "$12" },
-            { name: "Honey Infusion", price: "$20" }, { name: "Pure Extract", price: "$18" },
-            { name: "Baby Special", price: "$16" }, { name: "Wedding Pack", price: "$110" },
-            { name: "Silver Grade", price: "$10" }, { name: "Gold Grade", price: "$22" },
-            { name: "Chef's Choice", price: "$99" }, { name: "Value Pack (5g)", price: "$55" },
-            { name: "Saffron Tea", price: "$14" }, { name: "Face Glow Pack", price: "$25" },
-            { name: "Purity Plus", price: "$19" }, { name: "Vintage Collection", price: "$75" },
-            { name: "Healthy Heart", price: "$32" }, { name: "Super Negin (1g)", price: "$17" },
-            { name: "Bulk Pack (10g)", price: "$105" }, { name: "Limited Edition", price: "$150" }
+            { name: "Royal Mogra (1g)", price: "₹999" }, { name: "Premium Lacha (2g)", price: "₹1800" },
+            { name: "Luxury Gift Box", price: "₹4500" }, { name: "Organic Saffron", price: "₹1200" },
+            { name: "Honey Infusion", price: "₹850" }, { name: "Pure Extract", price: "₹950" },
+            { name: "Baby Special", price: "₹1100" }, { name: "Wedding Pack", price: "₹8500" },
+            { name: "Silver Grade", price: "₹700" }, { name: "Gold Grade", price: "₹1500" },
+            { name: "Chef's Choice", price: "₹6500" }, { name: "Value Pack (5g)", price: "₹3800" },
+            { name: "Saffron Tea", price: "₹450" }, { name: "Face Glow Pack", price: "₹1350" },
+            { name: "Purity Plus", price: "₹1400" }, { name: "Vintage Collection", price: "₹5200" },
+            { name: "Healthy Heart", price: "₹2100" }, { name: "Super Negin (1g)", price: "₹1150" },
+            { name: "Bulk Pack (10g)", price: "₹7200" }, { name: "Limited Edition", price: "₹9999" }
         ];
 
         const list = document.getElementById('product-list');
         products.forEach(p => {
-            list.innerHTML += `<div class="product reveal"><img src="https://img.sanishtech.com/u/9fb095560e499e1b384abac8496e139a.jpg"><h3>${p.name}</h3><p class="gold-shine">${p.price}</p><button class="btn-sm" style="width:100%; background:#ffcc00; padding:10px; border:none; font-weight:600; cursor:pointer; margin-top:10px;">Buy Now</button></div>`;
+            list.innerHTML += `
+                <div class="product reveal">
+                    <img src="https://img.sanishtech.com/u/9fb095560e499e1b384abac8496e139a.jpg">
+                    <h3>${p.name}</h3>
+                    <p class="gold-shine">${p.price}</p>
+                    <button class="btn-sm" onclick="openBilling('${p.name}', '${p.price}')">Buy Now</button>
+                </div>`;
         });
+
+        // --- BILLING & ORDER ---
+        let currentOrder = {};
+        function openBilling(name, price) {
+            currentOrder = { name, price };
+            document.getElementById('orderItem').innerText = name + " - " + price;
+            document.getElementById('billingModal').style.display = 'flex';
+        }
+        function closeBilling() { document.getElementById('billingModal').style.display = 'none'; }
+
+        function confirmOrder() {
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddr').value;
+            if(name && phone && address) {
+                db.ref('activities').push({
+                    type: "PURCHASE",
+                    details: `Name: ${name} | Phone: ${phone} | Item: ${currentOrder.name} | Addr: ${address}`,
+                    time: new Date().toLocaleTimeString()
+                }).then(() => { alert("Order Placed Successfully!"); closeBilling(); });
+            } else { alert("Please fill all details."); }
+        }
     </script>
 </body>
 </html>
